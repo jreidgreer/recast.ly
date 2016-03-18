@@ -1,13 +1,19 @@
-var App = () => (
-  <div>
-    <Nav />
-    <div className="col-md-7">
-      <VideoPlayer video={exampleVideoData[0]} />
-    </div>
-    <div className="col-md-5">
-      <VideoList videoList={exampleVideoData} />
-    </div>
-  </div>
-);
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+  render() {
+    return (<div>
+              <Nav />
+              <div className="col-md-7">
+                <VideoPlayer video={this.props.videoData[0]} />
+              </div>
+              <div className="col-md-5">
+                <VideoList videoList={this.props.videoData} />
+              </div>
+            </div>);
+  }
+}
+
+ReactDOM.render(<App videoData={exampleVideoData} />, document.getElementById('app'));
