@@ -1,14 +1,10 @@
-var VideoList = () => (
+var VideoList = (props) => (
   <div className="video-list media">
-    <VideoListEntry />
-    <VideoListEntry />
-    <VideoListEntry />
-    <VideoListEntry />
-    <VideoListEntry />
-    <VideoListEntry />
-    <VideoListEntry />
-    <VideoListEntry />
-    <VideoListEntry />
+    <VideoListEntry video={props.videoList[0]} />
+    <VideoListEntry video={props.videoList[1]} />
+    <VideoListEntry video={props.videoList[2]} />
+    <VideoListEntry video={props.videoList[3]} />
+    <VideoListEntry video={props.videoList[4]} />
   </div>
 );
 
