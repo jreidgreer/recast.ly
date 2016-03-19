@@ -6,11 +6,11 @@ class VideoList extends React.Component {
   render() {
     return (
       <div className="video-list media">
-        <VideoListEntry video={props.videoList[0]} />
-        <VideoListEntry video={props.videoList[1]} />
-        <VideoListEntry video={props.videoList[2]} />
-        <VideoListEntry video={props.videoList[3]} />
-        <VideoListEntry video={props.videoList[4]} />
+        <VideoListEntry video={this.props.videoList[0]} />
+        <VideoListEntry video={this.props.videoList[1]} />
+        <VideoListEntry video={this.props.videoList[2]} />
+        <VideoListEntry video={this.props.videoList[3]} />
+        <VideoListEntry video={this.props.videoList[4]} />
       </div>);
   }
 }

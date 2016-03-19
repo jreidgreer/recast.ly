@@ -7,13 +7,19 @@ class App extends React.Component {
     };
   }
 
+  videoTitleOnClick(e) {
+    this.setState({
+      currentVideo: e.data
+    });
+  }
+
   render() {
     return (<div>
               <Nav />
               <div className="col-md-7">
                 <VideoPlayer video={this.state.currentVideo} />
               </div>
-              <div className="col-md-5">
+              <div onClick={this.videoTitleOnClick.bind(this)} className="col-md-5">
                 <VideoList videoList={this.state.videos} />
               </div>
             </div>);
