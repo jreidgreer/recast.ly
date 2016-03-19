@@ -26,4 +26,23 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App videoData={exampleVideoData} />, document.getElementById('app'));
+// window.placeholderData = [
+//   {
+//     'id': {
+//       'videoId': ''
+//     },
+//     'snippet': {
+//       'title': 'No video loaded',
+//       'description': 'Please search for a video to watch',
+//       'thumbnails': {
+//         'default': {
+//           'url': '',
+//           'width': 120,
+//           'height': 90
+//         }
+//       }
+//     }
+//   }
+// ];
+
+ReactDOM.render(<App videoData={placeholderData} />, document.getElementById('app'));
