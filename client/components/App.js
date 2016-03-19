@@ -3,7 +3,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       videos: props.videoData,
-      currentVideo: props.videoData[0]
+      currentVideo: props.videoData[0],
+      autoplay: 1
     };
     this.canSearch = false;
     this.searchVideos = window.debounce(this.triggerSearchVideos.bind(this), 400);
@@ -17,6 +18,12 @@ class App extends React.Component {
       });     
     });
     // ReactDOM.render(<App videoData={data.items} />, document.getElementById('app'));
+  }
+
+  setAutoPlay() {
+    this.setState({
+      autoplay: this.state.autoplay === 1 ? 0 : 1
+    });
   }
 
   videoTitleOnClick(e) {
@@ -40,9 +47,12 @@ class App extends React.Component {
     return (<div onKeyUp={this.searchVideos.bind(this)} onClick={this.searchVideos.bind(this)}>
               <Nav />
               <div className="col-md-7">
-                <VideoPlayer video={this.state.currentVideo} />
+                <VideoPlayer video={this.state.currentVideo} autoplay={this.state.autoplay} />
               </div>
               <div onClick={this.videoTitleOnClick.bind(this)} className="col-md-5">
+                <div onChange={this.setAutoPlay.bind(this)}>
+                  <AutoPlay />
+                </div>
                 <VideoList videoList={this.state.videos} />
               </div>
             </div>);

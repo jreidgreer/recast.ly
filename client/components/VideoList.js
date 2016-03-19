@@ -3,6 +3,10 @@ class VideoList extends React.Component {
     super(props);
   }
 
+  setAutoPlay(e) {
+    console.log(e);
+  }
+
   render() {
     return (
       <div className="video-list media">
