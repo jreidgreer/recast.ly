@@ -5,6 +5,7 @@ class App extends React.Component {
       videos: props.videoData,
       currentVideo: props.videoData[0]
     };
+    this.canSearch = true;
   }
 
   componentDidMount() {
@@ -23,8 +24,28 @@ class App extends React.Component {
     });
   }
 
+  searchVideos(e) {
+    if (this.canSearch) {
+      this.canSearch = false;
+
+      searchYouTube({query: e.data, key: window.YOUTUBE_API_KEY}, data => {
+        this.setState({
+          videos: data.items,
+          currentVideo: data.items[0]
+        });     
+      });
+
+      setTimeout(function() {
+        this.canSearch = true;
+        this.searchVideos(e);
+      }.bind(this), 400);
+    } else {
+      console.warn('Throttled.');
+    }
+  }
+
   render() {
-    return (<div>
+    return (<div onKeyUp={this.searchVideos.bind(this)}>
               <Nav />
               <div className="col-md-7">
                 <VideoPlayer video={this.state.currentVideo} />
