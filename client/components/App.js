@@ -5,7 +5,8 @@ class App extends React.Component {
       videos: props.videoData,
       currentVideo: props.videoData[0]
     };
-    this.canSearch = true;
+    this.canSearch = false;
+    this.searchVideos = window.debounce(this.triggerSearchVideos.bind(this), 400);
   }
 
   componentDidMount() {
@@ -24,28 +25,19 @@ class App extends React.Component {
     });
   }
 
-  searchVideos(e) {
-    if (this.canSearch) {
-      this.canSearch = false;
-
-      searchYouTube({query: e.data, key: window.YOUTUBE_API_KEY}, data => {
+  triggerSearchVideos() {
+    if (document.getElementById('search').value.length > 0) {
+      searchYouTube({query: document.getElementById('search').value, key: window.YOUTUBE_API_KEY}, data => {
         this.setState({
           videos: data.items,
           currentVideo: data.items[0]
         });     
       });
-
-      setTimeout(function() {
-        this.canSearch = true;
-        this.searchVideos(e);
-      }.bind(this), 400);
-    } else {
-      console.warn('Throttled.');
     }
   }
 
   render() {
-    return (<div onKeyUp={this.searchVideos.bind(this)}>
+    return (<div onKeyUp={this.searchVideos.bind(this)} onClick={this.searchVideos.bind(this)}>
               <Nav />
               <div className="col-md-7">
                 <VideoPlayer video={this.state.currentVideo} />
@@ -75,5 +67,37 @@ window.placeholderData = [
     }
   }
 ];
+
+window.debounce = function(func, wait, immediate) {
+  var timeout, args, context, timestamp, result;
+
+  var later = function() {
+    var last = Date.now - timestamp;
+
+    if (last < wait && last >= 0) {
+      timeout = setTimeout(later, wait - last);
+    } else {
+      timeout = null;
+      if (!immediate) {
+        result = func.apply(context, args);
+        if (!timeout) { context = args = null; }
+      }
+    }
+  };
+
+  return function() {
+    context = this;
+    args = arguments;
+    timestamp = Date.now;
+    var callNow = immediate && !timeout;
+    if (!timeout) { timeout = setTimeout(later, wait); }
+    if (callNow) {
+      result = func.apply(context, args);
+      context = args = null;
+    }
+
+    return result;
+  };
+};
 
 ReactDOM.render(<App videoData={placeholderData} />, document.getElementById('app'));
