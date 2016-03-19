@@ -7,6 +7,16 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    searchYouTube({query: 'Potatoes', key: window.YOUTUBE_API_KEY}, data => {
+      this.setState({
+        videos: data.items,
+        currentVideo: data.items[0]
+      });     
+    });
+    // ReactDOM.render(<App videoData={data.items} />, document.getElementById('app'));
+  }
+
   videoTitleOnClick(e) {
     this.setState({
       currentVideo: e.data
@@ -26,23 +36,23 @@ class App extends React.Component {
   }
 }
 
-// window.placeholderData = [
-//   {
-//     'id': {
-//       'videoId': ''
-//     },
-//     'snippet': {
-//       'title': 'No video loaded',
-//       'description': 'Please search for a video to watch',
-//       'thumbnails': {
-//         'default': {
-//           'url': '',
-//           'width': 120,
-//           'height': 90
-//         }
-//       }
-//     }
-//   }
-// ];
+window.placeholderData = [
+  {
+    'id': {
+      'videoId': ''
+    },
+    'snippet': {
+      'title': 'No video loaded',
+      'description': 'Please search for a video to watch',
+      'thumbnails': {
+        'default': {
+          'url': '',
+          'width': 120,
+          'height': 90
+        }
+      }
+    }
+  }
+];
 
 ReactDOM.render(<App videoData={placeholderData} />, document.getElementById('app'));
